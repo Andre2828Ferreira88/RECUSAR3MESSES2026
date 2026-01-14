@@ -10,15 +10,33 @@
 <div class="container mt-5">
     <h2 class="mb-4">Análise de Recusas (3 Meses)</h2>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% for campo in ["mes1","mes2","mes3","codigo do prestador"] %}
-        <div class="mb-3">
-            <label class="form-label">{{ campo }}</label>
-            <input type="file" name="{{ campo }}" class="form-control" required>
-        </div>
-        {% endfor %}
-        <button class="btn btn-success">Gerar Relatório</button>
-    </form>
+        <form method="POST" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label class="form-label">Mês 1</label>
+                <input type="file" name="mes1" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mês 2</label>
+                <input type="file" name="mes2" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mês 3</label>
+                <input type="file" name="mes3" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Código do Prestador</label>
+                <input type="file" name="codigos" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Gerar Relatório
+            </button>
+        </form>
+
 
     {% if resultado %}
         <hr>
@@ -50,3 +68,5 @@
 
 </body>
 </html>
+
+
