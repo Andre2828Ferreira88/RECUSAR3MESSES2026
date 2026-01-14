@@ -18,13 +18,21 @@ def index():
     arquivo_saida = None
 
     if request.method == "POST":
+        print("FILES RECEBIDOS:", request.files)
         arquivos = {}
-        for campo in ["mes1", "mes2", "mes3", "codigos"]:
-            f = request.files[campo]
+        campos = ["mes1", "mes2", "mes3", "codigos"]
+
+        for campo in campos:
+            f = request.files.get(campo)
+
+            if not f or f.filename == "":
+                return f"Arquivo obrigatório não enviado: {campo}", 400
+
             nome = f"{uuid.uuid4()}_{f.filename}"
             caminho = os.path.join(UPLOAD_DIR, nome)
             f.save(caminho)
             arquivos[campo] = caminho
+
 
         df = processar(
             arquivos["mes1"],
@@ -45,6 +53,9 @@ def index():
         resultado=resultado,
         arquivo_saida=arquivo_saida
     )
+    
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB
+
 
 @app.route("/download/<nome>")
 def download(nome):
